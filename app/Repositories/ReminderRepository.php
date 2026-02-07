@@ -37,4 +37,28 @@ class ReminderRepository
         }
         return false;
     }
+
+    public function getAll($id)
+    {
+        return Reminder::where('user_id', $id)->get();
+    }
+
+    public function find(int $id)
+    {
+        return Reminder::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->first();
+    }
+
+    public function update(int $id, array $data)
+    {
+        $reminder = Reminder::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->first();
+        if ($reminder) {
+            $reminder->update($data);
+            return true;
+        }
+        return false;
+    }
 }

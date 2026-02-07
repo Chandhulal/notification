@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Crypt;
-
 if(!function_exists('api_success')){
     function api_success($success = true, $message, $data = null,$code=200){
         return response()->json([

@@ -46,4 +46,38 @@ class ReminderController extends Controller
 
         return api_error(false, $deleted['message']);
     }
+
+    public function index()
+    {
+        $reminders = $this->reminderService->getReminders();
+
+        if ($reminders['success']) {
+            return api_success(true, $reminders['message'], $reminders['data']);
+        }
+
+        return api_error(false, $reminders['message']);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|nullable|string',
+            'remind_at' => 'sometimes|required|date',
+        ]);
+
+        $id = decrypt_id($id);
+        if($id <= 0 && !is_int($id)){
+            return api_error(false, 'Invalid Reminder ID');
+        }
+
+        $updated = $this->reminderService->updateReminder($id, $validatedData);
+
+        if ($updated['success']) {
+            return api_success(true, $updated['message']);
+        }
+
+        return api_error(false, $updated['message']);
+    }
 }
