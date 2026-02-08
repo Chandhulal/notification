@@ -12,12 +12,14 @@ class Reminder extends Model
         'title',
         'description',
         'remind_at',
-        'is_send',
+        'status',
+        'sent_at',
     ];
 
     protected $casts = [
         'remind_at' => 'datetime',
-        'is_send' => 'boolean',
+        'status' => 'string',
+        'sent_at' => 'datetime',
     ];
 
     public function user()
