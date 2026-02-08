@@ -15,7 +15,7 @@ class SendReminderJob implements ShouldQueue
     protected $reminder;
 
     public function __construct($reminder)
-    {logger("1");
+    {
         $this->reminder = $reminder;
     }
 
@@ -23,7 +23,7 @@ class SendReminderJob implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-    {logger("2");
+    {
         Mail::to($this->reminder->user->email)
         ->send(new ReminderMail($this->reminder));
 
@@ -34,7 +34,7 @@ class SendReminderJob implements ShouldQueue
     }
 
     public function failed(\Throwable $exception)
-    {logger("3");
+    {
         $this->reminder->update([
             'status' => 'failed',
         ]);

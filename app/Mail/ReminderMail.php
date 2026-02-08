@@ -16,7 +16,7 @@ class ReminderMail extends Mailable
     public Reminder $reminder;
 
     public function __construct(Reminder $reminder)
-    {logger("4");
+    {
         $this->reminder = $reminder;
     }
 
