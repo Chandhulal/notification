@@ -27,7 +27,7 @@ class CheckReminders extends Command
         }
 
         foreach ($reminders as $index => $reminder) {
-            SendReminderJob::dispatch($reminder)->delay(now()->addSeconds($index * 2));
+            SendReminderJob::dispatch($reminder)->delay(Carbon::now()->addSeconds($index * 2));
             $this->info("Dispatched job for reminder ID: {$reminder->id}");
         }
     }

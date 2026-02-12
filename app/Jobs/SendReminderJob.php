@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Events\ReminderSent;
 use App\Mail\ReminderMail;
 use App\Models\Reminder;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +33,8 @@ class SendReminderJob implements ShouldQueue
             'status' => 'sent',
             'sent_at' => now()
         ]);
+
+        event(new ReminderSent($this->reminder));
     }
 
     public function failed(\Throwable $exception)

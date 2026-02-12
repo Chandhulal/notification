@@ -1,8 +1,10 @@
 <?php
 
+use App\Events\ReminderSent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\AuthController;
+use App\Models\Reminder;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -14,4 +16,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/update-reminder/{id}', [ReminderController::class, 'update'])->name('update-reminder');
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+});
+Route::get('/broadcast-test', function () {
+    $reminder = Reminder::first();
+    event(new ReminderSent($reminder));
+    return 'event fired';
 });
