@@ -18,8 +18,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
-Route::get('/broadcast-test', function () {
-    $reminder = Reminder::first();
-    event(new ReminderSent($reminder));
-    return 'event fired';
-});
