@@ -62,4 +62,9 @@ class AuthController extends Controller
         $response = $this->authService->logout($request->user());
         return api_success(true, $response['message']);
     }
+
+    public function me(Request $request)
+    {
+        return api_success(true, 'User details retrieved successfully', $request->user());
+    }
 }
