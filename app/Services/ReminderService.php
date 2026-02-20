@@ -46,6 +46,7 @@ class ReminderService
                     'description' => $reminder->description,
                     'remind_at' => $reminder->remind_at,
                     'is_send' => $reminder->is_send,
+                    'status' => $reminder->status,
                 ];
             });
             return ['success' => true, 'message' => 'Reminders retrieved successfully', 'data' => $reminders];

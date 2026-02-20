@@ -16,20 +16,25 @@ class ReminderController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'remind_at' => 'required|date',
-        ]);
+        try{
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'remind_at' => 'required|date',
+            ]);
 
-        $reminder = $this->reminderService->createReminder($validatedData);
+            $reminder = $this->reminderService->createReminder($validatedData);
 
-        if ($reminder['success']) {
-            return api_success($reminder['message'], $reminder['data']);
+            if ($reminder['success']) {
+                return api_success($reminder['message'], $reminder['data']);
+            }
+
+            return api_error(false, $reminder['message']);
+
+        }catch(\Exception $e){
+            return api_error(false, 'An error occurred while creating the reminder', 500);
         }
-
-        return api_error(false, $reminder['message']);
     }
 
     public function destroy($id)
